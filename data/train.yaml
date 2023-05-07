@@ -1,0 +1,45 @@
+##在红楼梦数据集上微调的配置
+experiment:
+  exp_dir: experiments/
+  exp_name: RANER_finetune
+  seed: 33
+
+task: named-entity-recognition
+
+dataset:
+  data_file:  # 数据文件
+    train: 'ner_train.txt'
+    valid: 'ner_train.txt'
+    test: 'ner_train.txt'
+
+preprocessor:
+  type: sequence-labeling-preprocessor
+  max_length: 100
+
+data_collator: SequenceLabelingDataCollatorWithPadding
+
+model:
+  type: sequence-labeling-model
+  embedder:
+    model_name_or_path: damo/nlp_raner_named-entity-recognition_chinese-base-book
+  dropout: 0.1
+  use_crf: true
+
+train:
+  max_epochs: 40
+  dataloader:
+    batch_size_per_gpu: 5
+  optimizer:
+    type: AdamW
+    lr: 5.0e-5
+    param_groups:
+      - regex: crf
+        lr: 5.0e-1
+    options:
+      cumulative_iters: 4
+
+evaluation:
+  dataloader:
+    batch_size_per_gpu: 5
+  metrics:
+    - type: ner-metric

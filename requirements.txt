@@ -1,0 +1,13 @@
+Keras==2.3.1
+modelscope==1.5.2
+numpy==1.16.2
+openpyxl==2.5.6
+pandas==0.23.4
+scikit_learn==0.24.2
+six==1.15.0
+tensorflow==1.13.1
+termcolor==1.1.0
+pandas==0.23.4
+matplotlib==2.2.4
+numpy==1.16.2
+xlrd
